@@ -13,6 +13,7 @@ export default function Hero() {
   const [showCode, setShowCode] = useState(true)
 
   const examplePrompts = [
+    { text: "Create an e-commerce store with product catalog and shopping cart", type: "ecommerce" },
     { text: "Create a React dashboard with real-time analytics and charts", type: "dashboard" },
     { text: "Build a chatbot interface with message history", type: "chatbot" },
     { text: "Design a landing page for a SaaS product", type: "landing" },
@@ -20,6 +21,96 @@ export default function Hero() {
   ]
 
   const codeTemplates = {
+    ecommerce: `// Generated with CodeForge AI - E-commerce Store
+import React, { useState } from 'react'
+import { Card } from '@/components/ui/card'
+import { ShoppingCart, Star, Heart, Search } from 'lucide-react'
+
+export default function EcommerceStore() {
+  const [cart, setCart] = useState([])
+  const [products] = useState([
+    { id: 1, name: 'Premium Headphones', price: 299.99, rating: 4.5, image: '🎧' },
+    { id: 2, name: 'Smart Watch', price: 399.99, rating: 4.8, image: '⌚' },
+    { id: 3, name: 'Wireless Speaker', price: 149.99, rating: 4.3, image: '🔊' },
+    { id: 4, name: 'Laptop Stand', price: 79.99, rating: 4.6, image: '💻' },
+    { id: 5, name: 'USB-C Hub', price: 59.99, rating: 4.4, image: '🔌' },
+    { id: 6, name: 'Mechanical Keyboard', price: 189.99, rating: 4.7, image: '⌨️' },
+  ])
+  
+  const addToCart = (product) => {
+    setCart([...cart, product])
+  }
+  
+  return (
+    <div className="bg-slate-900 min-h-screen">
+      {/* Header */}
+      <header className="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 p-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-white">TechStore</h2>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input 
+                type="text" 
+                placeholder="Buscar produtos..." 
+                className="pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white w-64"
+              />
+            </div>
+            <button className="relative p-2 hover:bg-slate-800 rounded-lg">
+              <ShoppingCart className="w-6 h-6 text-white" />
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-cyan-500 rounded-full text-xs font-bold text-slate-900 flex items-center justify-center">
+                {cart.length}
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+      
+      {/* Hero Banner */}
+      <section className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 p-8 border-b border-slate-700">
+        <h1 className="text-4xl font-bold text-white mb-4">
+          Ofertas Especiais de <span className="text-cyan-400">Black Friday</span>
+        </h1>
+        <p className="text-xl text-gray-300 mb-6">Até 50% de desconto em produtos selecionados</p>
+        <button className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-green-500 text-slate-900 rounded-lg font-semibold">
+          Ver Ofertas
+        </button>
+      </section>
+      
+      {/* Products */}
+      <section className="p-6">
+        <h2 className="text-2xl font-bold text-white mb-6">Produtos em Destaque</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <Card key={product.id} className="bg-slate-800/50 border-slate-700 overflow-hidden">
+              <div className="aspect-square bg-slate-700/50 flex items-center justify-center text-6xl">
+                {product.image}
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-white mb-2">{product.name}</h3>
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={\`w-4 h-4 \${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}\`} />
+                  ))}
+                  <span className="text-sm text-gray-400 ml-2">({product.rating})</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-cyan-400">\${product.price}</span>
+                  <button 
+                    onClick={() => addToCart(product)}
+                    className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-green-500 text-slate-900 rounded-lg font-semibold"
+                  >
+                    Adicionar
+                  </button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+    </div>
+  )
+}`,
     dashboard: `// Generated with CodeForge AI - Analytics Dashboard
 import React, { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/card'
@@ -305,11 +396,15 @@ export default function TodoList() {
 
   const detectAppType = (promptText) => {
     const lower = promptText.toLowerCase()
-    if (lower.includes('dashboard') || lower.includes('analytics') || lower.includes('chart')) return 'dashboard'
-    if (lower.includes('chatbot') || lower.includes('chat') || lower.includes('message')) return 'chatbot'
-    if (lower.includes('landing') || lower.includes('saas') || lower.includes('homepage')) return 'landing'
-    if (lower.includes('todo') || lower.includes('task') || lower.includes('list')) return 'todo'
-    return 'dashboard' // default
+    // E-commerce tem prioridade alta
+    if (lower.includes('ecommerce') || lower.includes('e-commerce') || lower.includes('loja') || 
+        lower.includes('shop') || lower.includes('store') || lower.includes('venda') || 
+        lower.includes('produto') || lower.includes('carrinho') || lower.includes('compra')) return 'ecommerce'
+    if (lower.includes('chatbot') || lower.includes('chat') || lower.includes('message') || lower.includes('conversa')) return 'chatbot'
+    if (lower.includes('landing') || lower.includes('saas') || lower.includes('homepage') || lower.includes('página inicial')) return 'landing'
+    if (lower.includes('todo') || lower.includes('task') || lower.includes('list') || lower.includes('tarefa')) return 'todo'
+    if (lower.includes('dashboard') || lower.includes('analytics') || lower.includes('chart') || lower.includes('gráfico')) return 'dashboard'
+    return 'ecommerce' // default mudado para ecommerce para ser mais versátil
   }
 
   const simulateCodeGeneration = async () => {

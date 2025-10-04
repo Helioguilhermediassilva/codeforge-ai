@@ -1,10 +1,101 @@
 import { Card } from '@/components/ui/card.jsx'
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { TrendingUp, Users, DollarSign, Activity } from 'lucide-react'
+import { TrendingUp, Users, DollarSign, Activity, ShoppingCart, Star, Heart, Search } from 'lucide-react'
 
 // Componente que renderiza o preview baseado no tipo de aplicação
 export default function LivePreview({ type = 'dashboard' }) {
   
+  // E-commerce/Sales Website Preview
+  if (type === 'ecommerce') {
+    const products = [
+      { id: 1, name: 'Premium Headphones', price: 299.99, rating: 4.5, image: '🎧' },
+      { id: 2, name: 'Smart Watch', price: 399.99, rating: 4.8, image: '⌚' },
+      { id: 3, name: 'Wireless Speaker', price: 149.99, rating: 4.3, image: '🔊' },
+      { id: 4, name: 'Laptop Stand', price: 79.99, rating: 4.6, image: '💻' },
+      { id: 5, name: 'USB-C Hub', price: 59.99, rating: 4.4, image: '🔌' },
+      { id: 6, name: 'Mechanical Keyboard', price: 189.99, rating: 4.7, image: '⌨️' },
+    ]
+
+    return (
+      <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl overflow-hidden">
+        {/* Header */}
+        <div className="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 p-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">TechStore</h2>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Buscar produtos..." 
+                  className="pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder:text-gray-500 w-64"
+                />
+              </div>
+              <button className="relative p-2 hover:bg-slate-800 rounded-lg transition-colors">
+                <ShoppingCart className="w-6 h-6 text-white" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-cyan-500 rounded-full text-xs font-bold text-slate-900 flex items-center justify-center">
+                  3
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Hero Banner */}
+        <div className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 p-8 border-b border-slate-700">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Ofertas Especiais de <span className="text-cyan-400">Black Friday</span>
+            </h1>
+            <p className="text-xl text-gray-300 mb-6">
+              Até 50% de desconto em produtos selecionados
+            </p>
+            <button className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-green-500 text-slate-900 rounded-lg font-semibold hover:from-cyan-400 hover:to-green-400 transition-all">
+              Ver Ofertas
+            </button>
+          </div>
+        </div>
+
+        {/* Products Grid */}
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-white mb-6">Produtos em Destaque</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <Card key={product.id} className="bg-slate-800/50 border-slate-700 overflow-hidden hover:border-cyan-500/30 transition-all group">
+                <div className="aspect-square bg-slate-700/50 flex items-center justify-center text-6xl relative overflow-hidden">
+                  {product.image}
+                  <button className="absolute top-3 right-3 p-2 bg-slate-900/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Heart className="w-5 h-5 text-white" />
+                  </button>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-white mb-2">{product.name}</h3>
+                  <div className="flex items-center gap-1 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`} 
+                      />
+                    ))}
+                    <span className="text-sm text-gray-400 ml-2">({product.rating})</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold text-cyan-400">
+                      ${product.price}
+                    </span>
+                    <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-green-500 text-slate-900 rounded-lg font-semibold hover:from-cyan-400 hover:to-green-400 transition-all">
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   // Dashboard Preview
   if (type === 'dashboard') {
     const data = [
