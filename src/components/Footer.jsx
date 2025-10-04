@@ -69,7 +69,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
-            © {currentYear} CodeForge AI. All rights reserved.
+            © {currentYear} CodeForge AI by Hélio Guilherme Dias Silva. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm">
             <a href="#" className="text-gray-500 hover:text-cyan-400 transition-colors">Privacy Policy</a>
@@ -78,15 +78,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Powered By Badge */}
-        <div className="mt-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-cyan-400/20">
-            <span className="text-xs text-gray-400">Built with</span>
-            <span className="text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">
-              LangChain • React • Tailwind CSS
-            </span>
-          </div>
-        </div>
+
       </div>
     </footer>
   )
